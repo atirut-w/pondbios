@@ -18,6 +18,8 @@ SECTIONS
     } > RAM AT > ROM
 
     .bss : {
+        __bss_start__ = .;
         *(.bss)
+        __bss_end__ = .;
     } > RAM
 }
