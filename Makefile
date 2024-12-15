@@ -42,7 +42,7 @@ $(BUILD_DIR) $(OBJ_DIR):
 $(BUILD_DIR)/pondbios.bin: $(BUILD_DIR)/pondbios.elf
 	$(OBJCOPY) -O binary $< $@
 
-$(BUILD_DIR)/pondbios.elf: $(OBJ) | $(BUILD_DIR)
+$(BUILD_DIR)/pondbios.elf: $(OBJ) $(BUILD_DIR)/runtime.o | $(BUILD_DIR)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(OBJ_DIR)/%.s | $(OBJ_DIR)
@@ -53,3 +53,6 @@ $(OBJ_DIR)/%.s: $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
 	$(AS) $(ASFLAGS) -o $@ $<
+
+$(BUILD_DIR)/runtime.o: | $(BUILD_DIR)
+	$(AS) $(ASFLAGS) -sdcc -o $@ $(RUNTIME_DIR)/*.s
