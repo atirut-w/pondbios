@@ -1,6 +1,7 @@
     ; ROM header
     .org 0x0000
-    .global _start
+    .global start
 
 rst_00:
-    jp rst_00
+    di
+    jp start
