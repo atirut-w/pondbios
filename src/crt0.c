@@ -7,6 +7,13 @@ extern char _data_load__[];
 extern char _bss_start__[];
 extern char _bss_end__[];
 
+typedef struct {
+  void (*init)();
+} driver_t;
+
+extern driver_t _drivers_start__[];
+extern driver_t _drivers_end__[];
+
 extern int main(int argc, char **argv);
 
 void init_data() {
@@ -17,9 +24,17 @@ void init_bss() {
   memset(_bss_start__, 0, _bss_end__ - _bss_start__);
 }
 
+void init_drivers() {
+  driver_t *driver;
+  for (driver = _drivers_start__; driver < _drivers_end__; driver++) {
+    driver->init();
+  }
+}
+
 void crt_entry() {
   init_data();
   init_bss();
+  init_drivers();
   main(0, 0);
   while (1) {}
 }

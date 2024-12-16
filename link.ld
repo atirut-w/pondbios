@@ -8,6 +8,10 @@ SECTIONS
     .text : {
         *(.text)
         *(_CODE)
+
+        __drivers_start__ = .;
+        *(.drivers)
+        __drivers_end__ = .;
     } > ROM
 
     .data : {
