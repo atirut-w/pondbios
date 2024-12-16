@@ -12,6 +12,10 @@ SECTIONS
         __drivers_start__ = .;
         *(.drivers)
         __drivers_end__ = .;
+
+        __initializer_start__ = .;
+        *(_INITIALIZER)
+        __initializer_end__ = .;
     } > ROM
 
     .data : {
@@ -19,6 +23,10 @@ SECTIONS
         *(.data)
         __data_end__ = .;
         __data_load__ = LOADADDR(.data);
+
+        __initialized_start__ = .;
+        *(_INITIALIZED)
+        __initialized_end__ = .;
     } > RAM AT > ROM
 
     .bss : {

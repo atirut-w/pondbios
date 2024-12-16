@@ -7,6 +7,10 @@ extern char _data_load__[];
 extern char _bss_start__[];
 extern char _bss_end__[];
 
+extern char _initializer_start__[];
+extern char _initializer_end__[];
+extern char _initialized_start__[];
+
 typedef struct {
   void (*init)();
 } driver_t;
@@ -18,6 +22,7 @@ extern int main(int argc, char **argv);
 
 void init_data() {
   memcpy(_data_start__, _data_load__, _data_end__ - _data_start__);
+  memcpy(_initialized_start__, _initializer_start__, _initializer_end__ - _initializer_start__);
 }
 
 void init_bss() {
