@@ -46,6 +46,7 @@ void putchar_impl(int c) {
     cursor = (cursor / TAB_SIZE + 1) * TAB_SIZE;
     break;
   case '\n':
+    // TODO: Consider IBM behavior
     cursor = (cursor / WIDTH + 1) * WIDTH;
     break;
   case '\r':
