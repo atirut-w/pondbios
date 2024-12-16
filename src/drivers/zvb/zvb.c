@@ -23,13 +23,12 @@ void zvb_init() {
   outb(ZVB_PERI_BASE + 6, 0); // Disable hardware cursor
 }
 
-int puchar_impl(int c) {
+void putchar_impl(int c) {
   abuff[cursor] = 0x07;
 
   switch (c) {
   default:
     tbuff[cursor] = c;
-    abuff[cursor] = 0x07;
     cursor++;
     break;
   case '\n':
@@ -45,8 +44,9 @@ int puts(const char *s) {
   outb(MMU_PAGE2, 0x40);
 
   while (*s) {
-    puchar_impl(*s++);
+    putchar_impl(*s++);
   }
+  putchar_impl('\n');
 
   outb(MMU_PAGE2, old_map);
   return 0;
@@ -56,7 +56,8 @@ int putchar(int c) {
   char old_map = inb(MMU_PAGE2);
   outb(MMU_PAGE2, 0x40);
   
-  puchar_impl(c);
+  putchar_impl(c);
 
   outb(MMU_PAGE2, old_map);
+  return 0;
 }
