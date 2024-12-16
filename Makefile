@@ -46,12 +46,15 @@ $(BUILD_DIR)/pondbios.elf: $(OBJ) $(BUILD_DIR)/runtime.o | $(BUILD_DIR)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(OBJ_DIR)/%.s | $(OBJ_DIR)
+	mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -sdcc -o $@ $<
 
 $(OBJ_DIR)/%.s: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -S -o $@ $<
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
+	mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/runtime.o: | $(BUILD_DIR)

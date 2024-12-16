@@ -1,3 +1,5 @@
+#include <string.h>
+
 extern char _data_start__[];
 extern char _data_end__[];
 extern char _data_load__[];
@@ -6,18 +8,11 @@ extern char _bss_start__[];
 extern char _bss_end__[];
 
 void init_data() {
-  char *src = _data_load__;
-  char *dst = _data_start__;
-  while (dst < _data_end__) {
-    *dst++ = *src++;
-  }
+  memcpy(_data_start__, _data_load__, _data_end__ - _data_start__);
 }
 
 void init_bss() {
-  char *dst = _bss_start__;
-  while (dst < _bss_end__) {
-    *dst++ = 0;
-  }
+  memset(_bss_start__, 0, _bss_end__ - _bss_start__);
 }
 
 void crt_entry() {
