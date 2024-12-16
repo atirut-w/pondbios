@@ -4,6 +4,7 @@
 
 #define WIDTH 80
 #define HEIGHT 40
+#define TAB_SIZE 8
 
 #define ZVB_PERI_BASE 0xa0
 
@@ -31,8 +32,24 @@ void putchar_impl(int c) {
     tbuff[cursor] = c;
     cursor++;
     break;
+  case 0:
+    break;
+  case '\a':
+    // TODO: Beep
+    break;
+  case '\b':
+    if (cursor % WIDTH) {
+      cursor--;
+    }
+    break;
+  case '\t':
+    cursor = (cursor / TAB_SIZE + 1) * TAB_SIZE;
+    break;
   case '\n':
     cursor = (cursor / WIDTH + 1) * WIDTH;
+    break;
+  case '\r':
+    cursor = cursor / WIDTH * WIDTH;
     break;
   }
 
