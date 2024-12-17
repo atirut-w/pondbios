@@ -9,9 +9,9 @@ SECTIONS
         *(.text)
         *(_CODE)
 
-        __drivers_start__ = .;
-        *(.drivers)
-        __drivers_end__ = .;
+        __modules_start__ = .;
+        *(.modules)
+        __modules_end__ = .;
 
         __initializer_start__ = .;
         *(_INITIALIZER)

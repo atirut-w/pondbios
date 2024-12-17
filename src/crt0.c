@@ -13,10 +13,10 @@ extern char _initialized_start__[];
 
 typedef struct {
   void (*init)();
-} driver_t;
+} module_t;
 
-extern driver_t _drivers_start__[];
-extern driver_t _drivers_end__[];
+extern module_t _modules_start__[];
+extern module_t _modules_end__[];
 
 extern int main(int argc, char **argv);
 
@@ -29,17 +29,17 @@ void init_bss() {
   memset(_bss_start__, 0, _bss_end__ - _bss_start__);
 }
 
-void init_drivers() {
-  driver_t *driver;
-  for (driver = _drivers_start__; driver < _drivers_end__; driver++) {
-    driver->init();
+void init_modules() {
+  module_t *module;
+  for (module = _modules_start__; module < _modules_end__; module++) {
+    module->init();
   }
 }
 
 void crt_entry() {
   init_data();
   init_bss();
-  init_drivers();
+  init_modules();
   main(0, 0);
   while (1) {}
 }
